@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisdomteam.warehouse.mapper.GetOutStorageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisdomteam.warehouse.bean.GetOutStorage" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="getoutstorage_food_id" property="getoutstorageFoodId" jdbcType="INTEGER" />
+    <result column="getoutstorage_admin_id" property="getoutstorageAdminId" jdbcType="INTEGER" />
+    <result column="getoutstorage_food_nums" property="getoutstorageFoodNums" jdbcType="INTEGER" />
+    <result column="getoutstorage__food_totalprice" property="getoutstorageFoodTotalprice" jdbcType="DOUBLE" />
+    <result column="getoutstorage_type" property="getoutstorageType" jdbcType="CHAR" />
+  </resultMap>
+</mapper>

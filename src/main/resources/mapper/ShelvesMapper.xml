@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisdomteam.warehouse.mapper.ShelvesMapper" >
+  <resultMap id="BaseResultMap" type="com.wisdomteam.warehouse.bean.Shelves" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="shelves_id" property="shelvesId" jdbcType="INTEGER" />
+    <result column="shelves_type" property="shelvesType" jdbcType="CHAR" />
+    <result column="shelves_size" property="shelvesSize" jdbcType="INTEGER" />
+    <result column="shelves_house_id" property="shelvesHouseId" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

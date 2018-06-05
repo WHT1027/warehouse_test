@@ -1,0 +1,452 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>智能仓库管理系统</title>
+    <script th:src="@{/static/js/bootstrap-js/jquery-1.12.4.min.js}"></script>
+    <link th:href="@{/static/css/bootstrap-css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/static/js/bootstrap-js/bootstrap.min.js}"></script>
+    <!--<link th:href="@{/static/css/warehouse.css}" rel="stylesheet">-->
+    <style type="text/css">
+        /*导航条*/
+        .fontColorSet{
+            margin-bottom:0px;
+        }
+        .fontColorSet a{
+            color:#fff;
+        }
+        .fontColorSet a:hover,.fontColorSet a:focus{
+            color:#000;
+        }
+        .buttonColor{
+            background:#fff;
+        }
+        .buttonColor span{
+            background:#000;
+        }
+        .containerLeft{
+            width:14%;
+        }
+        .containerRight{
+            margin-left:14%;
+            width:86%;
+        }
+        /*左侧导航条*/
+        /* 下面是左侧导航栏的代码 */
+        .sidebar {
+            position: fixed;
+            top: 52px;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            display: block;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-color: #ddd;
+            border-right: 1px solid #eee;
+        }
+
+        .nav-sidebar {
+            margin-right: -21px;
+            margin-bottom: 20px;
+            margin-left: -20px;
+        }
+
+        .nav-sidebar > li > a {
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+
+        .nav-sidebar > .active > a,
+        .nav-sidebar > .active > a:hover,
+        .nav-sidebar > .active > a:focus {
+            color: #fff;
+            background-color: #428bca;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        .main .page-header {
+            margin-top: 0;
+        }
+
+        /*下拉菜单*/
+        .menuItem{
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+<!--顶部导航条-->
+<nav class="navbar navbar-dark bg-primary fontColorSet">
+
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed buttonColor" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">智能仓库管理系统</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#" id="JumpToContent">首页</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">功能<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header">业务功能</li>
+                        <li class="divider"></li>
+                        <li><a href="#">添加管理员</a></li>
+                        <li><a href="#">添加仓库</a></li>
+                        <li><a href="#">信息查询</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle "
+                       data-toggle="dropdown" style="margin-right:3px"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color:red;font-size:1px;" id="glyphicon-exclamation-sign1"></span> 张三 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" style="width:20px;">
+                        <li><a href="#" id="edit_btn">个人信息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" id="message_btn" onclick="removeglyphicon()">消息提醒  <span id="glyphicon-exclamation-sign2"class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color:red;"></span></a></li>
+                        <li class="divider"></li>
+                        <li><a th:href="@{/welcome}">注销</a></li>
+                    </ul></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--自适应布局-->
+<div class="container-fluid">
+    <div class="row">
+        <!---左侧导航栏-->
+        <div class="sidebar containerLeft">
+            <ul class="nav nav-sidebar">
+                <li><a href="#" onclick="addContent('ditu')">仓库管理</a></li>
+                <li><a href="#" onclick="addContent('foodmanagement')">食品管理</a></li>
+                <!-- <li><a href="#" onclick="addContent('ruku')">食品入库</a></li> -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">食品入库</a>
+                    <ul class="dropdown-menu menuItem" role="menu">
+                        <li><a href="#" onclick="addContent('didongruku')">自动入库</a></li>
+                        <li><a href="#" onclick="addContent('shoudongruku')">手动入库</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">食品出库</a>
+                    <ul class="dropdown-menu menuItem" role="menu">
+                        <li><a href="#" onclick="addContent('zidongchuku')">自动出库</a></li>
+                        <li><a href="#" onclick="addContent('shoudongchuku')">手动出库</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#" onclick="addContent('1')">信息管理</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="#" onclick="addContent('1')">设置</a></li>
+                <li><a href="#" onclick="addContent('1')">帮助</a></li>
+            </ul>
+        </div>
+        <!--右侧管理控制台-->
+        <div class="containerRight">
+
+            <div id="content" >
+                <div class="frames">
+                    <iframe name="left" id="rightMain" th:src="@{/linechart1}" frameborder="false" scrolling="auto" style="border:none;" width="100%" height="580px" allowtransparency="true">
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 管理员修改的模态框 -->
+<div class="modal fade" id="adminUpdateModal" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">管理员信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="adminUsername" class="form-control"
+                                   id="username_update_input" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">帐号</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="adminId" class="form-control"
+                                   id="userid_update_input" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="adminPassword" class="form-control"
+                                   id="password_update_input" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline"> <input type="radio"
+                                                                name="adminGender" id="gender1_update_input" value="M"
+                                                                checked="checked"> 男
+                            </label> <label class="radio-inline"> <input type="radio"
+                                                                         name="adminGender" id="gender2_update_input" value="F"> 女
+                        </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">电话</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="adminPhone" class="form-control"
+                                   id="phone_update_input" placeholder=""> <span
+                                class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">email</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="adminEmail" class="form-control"
+                                   id="email_update_input" placeholder="email@atguigu.com">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">部门</label>
+                        <div class="col-sm-4">
+                            <!-- 部门提交部门id即可 -->
+                            <select class="form-control" name="adminDeptId">
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="admin_update_btn">更新</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 消息提醒的模态框 -->
+<div class="modal fade" id="messageModal" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">食品消息</h4>
+            </div>
+            <div class="modal-body">
+                <div style="border-bottom:1px solid #999;height:60px;">
+                    <form class="form-horizontal">
+                        <span>消息1</span>
+                    </form>
+                </div>
+                <div style="border-bottom:1px solid #999;height:60px;">
+                    <form class="form-horizontal">
+                        <span>消息2</span>
+                    </form>
+                </div>
+                <div style="border-bottom:1px solid #999;height:60px;">
+                    <form class="form-horizontal">
+                        <span>消息3</span>
+                    </form>
+                </div>
+                <div style="border-bottom:1px solid #999;height:60px;">
+                    <form class="form-horizontal">
+                        <span>消息4</span>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function addContent(num) {
+        //清空内容
+        $("#content").empty();
+        //重新加载内容
+        //$("#content").load("contentOne.html");
+        /* 	$.ajax({
+               url: "putinstorage.jsp",
+               cache: false,
+               success: function (jsp) {
+                   $("#content").append(jsp);
+               }
+           });  */
+        if(num == "ditu"){
+            $("#content").append("<div></div>").addClass("frames").append("<iframe name='left' id='rightMain' src='/warehouse_location' frameborder='false' scrolling='auto' style='border:none;' width='100%' height='580px' allowtransparency='true'></iframe>");
+        }
+        if(num == "didongruku"){
+            $("#content").append("<div></div>").addClass("frames").append("<iframe name='left' id='rightMain' src='/putinstorage1' frameborder='false' scrolling='auto' style='border:none;' width='100%' height='580px' allowtransparency='true'></iframe>");
+        }
+        if(num == "shoudongruku"){
+            $("#content").append("<div></div>").addClass("frames").append("<iframe name='left' id='rightMain' src='/putinstorage2' frameborder='false' scrolling='auto' style='border:none;' width='100%' height='580px' allowtransparency='true'></iframe>");
+        }
+        if(num == "foodmanagement"){
+            $("#content").append("<div></div>").addClass("frames").append("<iframe name='left' id='rightMain' src='/foodsmanagement' frameborder='false' scrolling='auto' style='border:none;' width='100%' height='580px' allowtransparency='true'></iframe>");
+        }
+        if(num == "zidongchuku"){
+            $("#content").append("<div></div>").addClass("frames").append("<iframe name='left' id='rightMain' src='/getoutstorage1' frameborder='false' scrolling='auto' style='border:none;' width='100%' height='580px' allowtransparency='true'></iframe>");
+        }
+        if(num == "shoudongchuku"){
+            $("#content").append("<div></div>").addClass("frames").append("<iframe name='left' id='rightMain' src='/getoutstorage2' frameborder='false' scrolling='auto' style='border:none;' width='100%' height='580px' allowtransparency='true'></iframe>");
+        }
+    }
+    $("#JumpToContent").click(function(){
+        $("#content").empty();
+        $("#content").append("<div></div>").addClass("frames").append("<iframe name='left' id='rightMain' src='/linechart1' frameborder='false' scrolling='auto' style='border:none;' width='100%' height='580px' allowtransparency='true'></iframe>");
+    });
+
+
+    //1、我们是按钮创建之前就绑定了click，所以绑定不上。
+    //1）、可以在创建按钮的时候绑定。    2）、绑定点击.live()
+    //jquery新版没有live，使用on进行替代
+    $("#edit_btn").click(function() {
+        var id = 1;
+        //alert("edit");
+
+        //1、查出员工信息，显示员工信息
+        getAdmin(id);
+
+        //2、查出部门信息，并显示部门列表
+        getDepts("#adminUpdateModal select");
+
+        //3、把员工的id传递给模态框的更新按钮
+        $("#admin_update_btn").attr("edit-id", id);
+        //点击弹出模态框
+        $("#adminUpdateModal").modal({
+            backdrop : "static"
+        });
+    });
+
+    //显示消息模态框，提醒管理员查看
+    $("#message_btn").click(function(){
+        $("#messageModal").modal({
+            backdrop : "static"
+        });
+    });
+
+    //移除小图标
+    function removeglyphicon(){
+        $("#glyphicon-exclamation-sign1").remove();
+        $("#glyphicon-exclamation-sign2").remove();
+    }
+
+
+
+    //查询管理员部门信息
+    function getDepts(ele) {
+        //清空之前下拉列表的值
+        $(ele).empty();
+        $.ajax({
+            url : "${APP_PATH}/admindepts",
+            type : "GET",
+            success : function(result) {
+                //console.log(result);
+                //显示部门信息在下拉列表中
+                //$("#empAddModal select").append("")
+                /* 	dmindepts:Array(2)
+                    0:{id: 1, deptId: 1, deptName: "运营部"}
+                    1:{id: 2, deptId: 2, deptName: "市场部"}
+                    length:2 */
+                $.each(result.extend.admindepts, function() {
+                    var optionEle = $("<option></option>").append(
+                        this.deptName).attr("value", this.deptId);
+                    /* if(this.deptId == 1){
+                        optionEle.selected = true;
+                    } */
+                    optionEle.appendTo(ele);
+                });
+            }
+        });
+    }
+    //查询管理员信息
+    function getAdmin(id) {
+        $.ajax({
+            url : "${APP_PATH}/admin/" + id,
+            type : "GET",
+            success : function(result) {
+                //console.log(result);
+                /* 	admin: adminDeptId: 1
+                    adminEmail: "kevin@qq.com"
+                    adminGender: "M"
+                    adminId: 20152413
+                    adminPassword: "123456"
+                    adminPhone: "18823548067"
+                    adminUsername: "张三"
+                    id: 1 */
+                var adminData = result.extend.admin;
+                $("#userid_update_input").val(adminData.adminId);
+                $("#username_update_input").val(adminData.adminUsername);
+                $("#password_update_input").val(adminData.adminPassword);
+                $("#email_update_input").val(adminData.adminEmail);
+                $("#phone_update_input").val(adminData.adminPhone);
+                $("#adminUpdateModal input[name=gender]").val(
+                    [ adminData.adminGender ]);
+                $("#adminUpdateModal select").val([ adminData.dept_id ]);
+            }
+        });
+    }
+
+    $("#admin_update_btn").click(function(){
+        //alert("更新成功！");
+        $.ajax({
+            url: "${APP_PATH}/updateadmin",
+            data: $("#adminUpdateModal form").serialize(),
+            type: "POST",
+            success:function(result){
+                //alert(result.msg);
+                if(result.code == 100){
+                    alert("更新成功！");
+                }else{
+                    alert("更新失败！");
+                }
+                $("#adminUpdateModal").modal("hide");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

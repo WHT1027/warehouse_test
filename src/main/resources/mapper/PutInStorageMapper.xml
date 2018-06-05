@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisdomteam.warehouse.mapper.PutInStorageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisdomteam.warehouse.bean.PutInStorage" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="putinstorage_food_id" property="putinstorageFoodId" jdbcType="INTEGER" />
+    <result column="putinstorage_admin_id" property="putinstorageAdminId" jdbcType="INTEGER" />
+    <result column="putinstorage_food_nums" property="putinstorageFoodNums" jdbcType="INTEGER" />
+    <result column="putinstorage_date" property="putinstorageDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

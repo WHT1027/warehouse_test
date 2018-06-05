@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="MysqlContext" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.wisdomteam.warehouse.utils.MyMapper"/>
+        </plugin>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/warehouse"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <!-- 对于生成的bean所在包 -->
+        <javaModelGenerator targetPackage="com.wisdomteam.warehouse.bean" targetProject="src/main/java"/>
+
+        <!-- 对于生成的mapper所在目录 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+
+        <!-- 配置mapper对应的java映射 -->
+        <javaClientGenerator targetPackage="com.wisdomteam.warehouse.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <!-- table指定每个表的生成策略 -->
+        <table tableName="tbl_admin" domainObjectName="Admin"></table>
+        <table tableName="tbl_admin_dept" domainObjectName="AdminDepartment"></table>
+        <table tableName="tbl_foods_type" domainObjectName="FoodsType"></table>
+        <table tableName="tbl_getoutstorage" domainObjectName="GetOutStorage"></table>
+        <table tableName="tbl_houses" domainObjectName="Houses"></table>
+        <table tableName="tbl_putinstorage" domainObjectName="PutInStorage"></table>
+        <table tableName="tbl_shelves" domainObjectName="Shelves"></table>
+        <table tableName="tbl_warehouses" domainObjectName="WareHouses"></table>
+        <table tableName="tbl_foods_temperature" domainObjectName="FoodTemperature"></table>
+        <table tableName="tbl_foods" domainObjectName="Foods"></table>
+        <table tableName="tbl_prefoods" domainObjectName="PreFoods"></table>
+    </context>
+</generatorConfiguration>

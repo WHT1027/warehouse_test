@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="widht=device-width,initial-scale=1" />
+    <script th:src="@{/static/js/bootstrap-js/jquery-1.12.4.min.js}"></script>
+    <link th:href="@{/static/css/bootstrap-css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/static/js/bootstrap-js/bootstrap.min.js}"></script>
+    <title></title>
+    <style type="text/css">
+        .cangKu {
+            width: 100%;
+            height: 800px;
+            background: url("../static/img/jubu.png") center no-repeat;
+            background-size: cover;
+            background-attachment: fixed
+        }
+
+        .buttonInfo_1 {
+           float:left;
+           margin-left:25.5%;
+           margin-top:23%;
+        }
+        .buttonInfo_2 {
+           float:left;
+           margin-left:2%;
+           margin-top:19%;
+        }
+       .buttonInfo_3 {
+           float:left;
+           margin-left:1.5%;
+           margin-top:15%;
+        }
+      .buttonInfo_4 {
+           float:left;
+           margin-left:2%;
+           margin-top:11%;
+        }
+       .buttonInfo_5 {
+           float:left;
+           margin-left:-11%;
+           margin-top:40%;
+        }
+       .buttonInfo_6 {
+           float:left;
+           margin-left:-7%;
+           margin-top:36%;
+        }
+        .buttonInfo_7 {
+           float:left;
+           margin-left:0%;
+           margin-top:31%;
+        }
+        .buttonInfo_8 {
+           float:left;
+           margin-left:1%;
+           margin-top:27%;
+
+        }
+        .buttonInfo_9{
+           float:left;
+           margin-left:1%;
+           margin-top:24%;
+        }
+        .buttonInfo_10 {
+           float:left;
+           margin-left:2%;
+           margin-top:20%;
+        }
+        .buttonInfo_11 {
+           float:left;
+           margin-left:-9.5%;
+           margin-top:46%;
+        }
+        .buttonInfo_12 {
+           float:left;
+           margin-left:-6%;
+           margin-top:42%;
+        }
+        .buttonInfo_13{
+           float:left;
+           margin-left:-1%;
+           margin-top:40%;
+        }
+        .buttonInfo_14 {
+           float:left;
+           margin-left:1%;
+           margin-top:36%;
+        }
+        .buttonInfo_15 {
+           float:left;
+           margin-left:1%;
+           margin-top:33%;
+        }
+        .buttonInfo_16 {
+           float:left;
+           margin-left:2%;
+           margin-top:28%;
+        }
+        .buttonInfo_17 {
+           float:left;
+           margin-left:-8%;
+           margin-top:54%;
+        } 
+        .buttonInfo_18 {
+           float:left;
+           margin-left:-4%;
+           margin-top:50%;
+        } 
+        .buttonInfo span {
+            font-size: 25px;
+        } 
+        #reminded{
+            width:300px;
+            height:200px;
+            position:absolute;
+            margin-left:20%;
+            margin-top:20%;
+            border:1px solid #ccc;
+            background-color:#fff;
+            padding:20px;
+            padding-top:0px;
+        } 
+        #reminded div{
+            display:block;
+            margin-left:100px;
+            margin-bottom:20px;
+        }
+        #reminded label{
+            
+            margin-top:5px;
+            margin-left:10px;
+        }
+        #reminded_button{
+            margin-top:50px;
+            margin-left:250px;
+        }
+    </style>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div class="cangKu" onDblClick="showJuBu()" id="3d_content">
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_1"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_2"><span style="color:red">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_3"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_4"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_5"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_6"><span style="color:red">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_7"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_8"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_9"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_10"><span style="color:red">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_11"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_12"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_13"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_14"><span style="color:red">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_15"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_16"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_17"><span style="color:green">*</span></button>
+        <button type="button" onclick="showInfo('1')" class="buttonInfo buttonInfo_18"><span style="color:green">*</span></button> 
+        <div id="reminded">
+            <br/>
+            <div>食品消息</div>
+            <label>食品编号：000501</label><br/>
+            <label>食品名称：苹果</label><br/>
+            <label>食品数量:172斤</label><br/>
+            <label>剩余保质期：还剩2天</label>
+            <button id="reminded_button">确定</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function showInfo(num) {
+            alert("食品编号：002<br/>食品名称：牛肉<br/>食品数量：100斤〈br/>食品保质期：剩余2天");
+        }
+    </script>
+</body>
+</html>

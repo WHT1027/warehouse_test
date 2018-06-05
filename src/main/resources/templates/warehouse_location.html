@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>  
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<title></title>
+<style type="text/css">  
+    html{height:100%}  
+    body{height:100%;margin:0px;padding:0px}  
+    #container{height:100%}  
+    .cangKu{
+        margin-bottom:2px;
+        font-size:17px;
+    }
+    .link{
+        display:block;
+        width:50px;
+        height:25px;
+        line-height:25px;
+        text-align:center;
+        text-decoration: NONE;
+        margin-top:40px;
+        margin-left:150px;
+        font-size:17px;
+        background:#ccc;
+        border-radius:5px;
+    }
+</style>  
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=P40qn7UAoLq4t6PmgVLvGYVqPTflNdZ9"></script>
+</head>  
+ 
+<body>  
+<div id="container"></div> 
+<script type="text/javascript">
+    var map = new BMap.Map("container");// 创建地图实例  
+
+    var point = new BMap.Point(112.503214, 23.112928);// 创建点坐标  
+    map.centerAndZoom(point, 13);// 初始化地图，设置中心点坐标和地图级别  
+
+
+    //var opts = { offset: new BMap.Size(150, 5) };
+    map.addControl(new BMap.NavigationControl());//添加水平移动及缩放的功能
+    map.addControl(new BMap.ScaleControl());
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+    var data_info = [
+        [112.503214, 23.112928, "<br/><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;名称:仓库一</div><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;位置:肇庆学院</div>"
+                  + "<a class='link' href='/house1'>进入</a>"],
+
+		[112.508244, 23.106679, "<br/><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;名称:仓库二</div><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;位置:肇庆东岗村</div>"
+                  + "<a class='link' href='http://baidu.com'>进入</a>"],
+
+	    [112.516078, 23.074964, "<br/><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;名称:仓库三</div><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;位置:肇庆下黄冈</div>"
+                  + "<a class='link' href='http://baidu.com'>进入</a>"],
+
+        [112.41827, 23.079552, "<br/><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;名称:仓库四</div><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;位置:肇庆城西客运站</div>"
+                  + "<a class='link' href='http://baidu.com'>进入</a>"],
+
+		[112.279572, 23.052686, "<br/><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;名称:仓库五</div><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;位置:肇庆大尖</div>"
+                  + "<a class='link' href='http://baidu.com'>添加</a>"],
+
+	    [112.369546, 22.939576, "<br/><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;名称:仓库六</div><br/>"
+                  + "<div class='cangKu'>&nbsp;&nbsp;&nbsp;位置:肇庆白诸镇</div>"
+                  + "<a class='link' href='http://baidu.com'>添加</a>"]
+    ];
+    var opts = {
+        width: 200,     // 信息窗口宽度    
+        height: 200,     // 信息窗口高度    
+        title: "仓库详情", // 信息窗口标题   
+        enableMessage: true//设置允许信息窗发送短息
+    };
+    for (var i = 0; i < data_info.length; i++) {
+        var marker = new BMap.Marker(new BMap.Point(data_info[i][0], data_info[i][1]));  // 创建标注
+        var content = data_info[i][2];
+        map.addOverlay(marker);// 将标注添加到地图中
+        if (i >=4) {
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        }
+        addClickHandler(content, marker);
+    }
+    function addClickHandler(content, marker) {
+        marker.addEventListener("click", function (e) {
+            openInfo(content, e)
+        }
+		);
+    }
+    function openInfo(content, e) {
+        var p = e.target;
+        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+        var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象 
+        map.openInfoWindow(infoWindow, point); //开启信息窗口
+    }
+  
+
+</script>  
+</body>  
+</html>

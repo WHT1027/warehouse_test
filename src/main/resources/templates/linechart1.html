@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<!-- ECharts单文件引入 -->
+<script type="text/javascript"
+	th:src="@{/static/js/bootstrap-js/jquery-1.12.4.min.js}"></script>
+</head>
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<title>echarts折线图</title>
+
+<body>
+    <!--定义页面图表容器-->
+    <!-- 必须制定容器的大小（height、width） -->
+    <div id="food_line"
+        style="height: 400px; width: 700px; padding: 10px;margin-top:50px;margin-left:21%;">
+    </div>
+     <div id="food_pie"
+        style="height: 400px; width: 700px; padding: 10px;margin-top:50px;margin-left:21%;">
+    </div>
+    <script type="text/javascript">
+
+					/* var myChart;
+					var eCharts; */
+					// 路径配置
+					require.config({
+						paths : {
+							echarts : 'http://echarts.baidu.com/build/dist'
+						}
+					});
+					require(
+							[ 'echarts', 'echarts/chart/line','echarts/chart/bar',
+								'echarts/chart/pie', 'echarts/chart/funnel'// 使用折线图就加载line模块，按需加载
+							],
+							function(ec) {
+								// 基于准备好的dom，初始化echarts图表
+								var foodLineChart = ec.init(document
+										.getElementById('food_line'));
+								var foodPieChart = ec.init(document
+										.getElementById('food_pie'));
+
+								var option1 = {
+									title : {
+										text : '一天内苹果温度变化',
+										subtext : '单位/°C'
+									},
+									tooltip : {
+										trigger : 'axis'
+									},
+									legend : {
+										data : []
+									},
+									toolbox : {
+										show : true,
+										feature : {
+											dataView : {
+												show : true,
+												readOnly : false
+											},
+											magicType : {
+												show : true,
+												type : [ 'line', 'bar' ]
+											},
+											restore : {
+												show : true
+											},
+										}
+									},
+									calculable : false,
+									xAxis : [ {
+										type : 'category',
+										boundaryGap : false,
+										data : [ '0点', '1点', '2点', '3点', '4点',
+												'5点', '6点', '7点', '8点', '9点',
+												'10点', '11点', '12点', '13点',
+												'14点', '15点', '16点', '17点',
+												'18点', '19点', '20点', '21点',
+												'22点', '23点' ]
+									} ],
+									yAxis : [ {
+										type : 'value',
+										axisLabel : {
+											formatter : '{value} °C'
+										}
+									} ],
+									series : [
+											{
+												name : '温度',
+												type : 'line',
+												data : [ 3.3, 5.6, 4, 6, 5, 6,
+														5.5, 5, 6, 6.5, 7.5, 7,
+														8, 7.5, 10.5, 10, 10,
+														9, 9, 8, 6, 5.5, 4, 3.5 ],
+												markPoint : {
+													data : [ {
+														type : 'max',
+														name : '最大值'
+													}, {
+														type : 'min',
+														name : '最小值'
+													} ]
+												},
+												markLine : {
+													data : [ {
+														type : 'average',
+														name : '平均值'
+													} ]
+												}
+											},
+
+									]
+								};
+								
+								var option2 = {
+									    title : {
+									        text: '仓库各类食品储存量',
+									        subtext: '单位/吨',
+									        x:'center'
+									    },
+									    tooltip : {
+									        trigger: 'item',
+									        formatter: "{a} <br/>{b} : {c} ({d}%)"
+									    },
+									    legend: {
+									        orient : 'vertical',
+									        x : 'left',
+									        data:['水果','蔬菜','肉类']
+									    },
+									    toolbox: {
+									        show : true,
+									        feature : {
+									            dataView : {show: true, readOnly: false},
+									            magicType : {
+									                show: true, 
+									                type: ['pie', 'funnel'],
+									                option: {
+									                    funnel: {
+									                        x: '25%',
+									                        width: '50%',
+									                        funnelAlign: 'left',
+									                        max: 1548
+									                    }
+									                }
+									            },
+									            restore : {show: true},
+									        }
+									    },
+									    calculable : false,
+									    series : [
+									        {
+									            name:'食品种类',
+									            type:'pie',
+									            radius : '55%',
+									            center: ['50%', '60%'],
+									            data:[
+									                {value:33, name:'水果'},
+									                {value:30, name:'蔬菜'},
+									                {value:15, name:'肉类'},
+									            ]
+									        }
+									    ]
+									};
+								// 为echarts对象加载数据 
+								foodLineChart.setOption(option1);
+								foodPieChart.setOption(option2);
+							});
+				</script>
+</body>
+</html>

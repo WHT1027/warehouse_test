@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisdomteam.warehouse.mapper.WareHousesMapper" >
+  <resultMap id="BaseResultMap" type="com.wisdomteam.warehouse.bean.WareHouses" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="warehouse_type" property="warehouseType" jdbcType="CHAR" />
+    <result column="warehouse_address" property="warehouseAddress" jdbcType="VARCHAR" />
+    <result column="warehouse_status" property="warehouseStatus" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

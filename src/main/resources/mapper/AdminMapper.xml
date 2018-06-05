@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisdomteam.warehouse.mapper.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.wisdomteam.warehouse.bean.Admin" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="admin_username" property="adminUsername" jdbcType="VARCHAR" />
+    <result column="admin_password" property="adminPassword" jdbcType="VARCHAR" />
+    <result column="admin_gender" property="adminGender" jdbcType="CHAR" />
+    <result column="admin_phone" property="adminPhone" jdbcType="VARCHAR" />
+    <result column="admin_email" property="adminEmail" jdbcType="VARCHAR" />
+    <result column="admin_dept_id" property="adminDeptId" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>
