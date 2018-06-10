@@ -7,78 +7,7 @@
     <script th:src="@{/static/js/bootstrap-js/jquery-1.12.4.min.js}"></script>
     <link th:href="@{/static/css/bootstrap-css/bootstrap.min.css}" rel="stylesheet">
     <script th:src="@{/static/js/bootstrap-js/bootstrap.min.js}"></script>
-    <!--<link th:href="@{/static/css/warehouse.css}" rel="stylesheet">-->
-    <style type="text/css">
-        /*导航条*/
-        .fontColorSet{
-            margin-bottom:0px;
-        }
-        .fontColorSet a{
-            color:#fff;
-        }
-        .fontColorSet a:hover,.fontColorSet a:focus{
-            color:#000;
-        }
-        .buttonColor{
-            background:#fff;
-        }
-        .buttonColor span{
-            background:#000;
-        }
-        .containerLeft{
-            width:14%;
-        }
-        .containerRight{
-            margin-left:14%;
-            width:86%;
-        }
-        /*左侧导航条*/
-        /* 下面是左侧导航栏的代码 */
-        .sidebar {
-            position: fixed;
-            top: 52px;
-            bottom: 0;
-            left: 0;
-            z-index: 1000;
-            display: block;
-            padding: 20px;
-            overflow-x: hidden;
-            overflow-y: auto;
-            background-color: #ddd;
-            border-right: 1px solid #eee;
-        }
-
-        .nav-sidebar {
-            margin-right: -21px;
-            margin-bottom: 20px;
-            margin-left: -20px;
-        }
-
-        .nav-sidebar > li > a {
-            padding-right: 20px;
-            padding-left: 20px;
-        }
-
-        .nav-sidebar > .active > a,
-        .nav-sidebar > .active > a:hover,
-        .nav-sidebar > .active > a:focus {
-            color: #fff;
-            background-color: #428bca;
-        }
-
-        .main {
-            padding: 20px;
-        }
-
-        .main .page-header {
-            margin-top: 0;
-        }
-
-        /*下拉菜单*/
-        .menuItem{
-            width:100%;
-        }
-    </style>
+    <link th:href="@{/static/css/warehouse.css}" rel="stylesheet">
 </head>
 <body>
 <!--顶部导航条-->
@@ -118,7 +47,7 @@
                         <li class="divider"></li>
                         <li><a href="#" id="message_btn" onclick="removeglyphicon()">消息提醒  <span id="glyphicon-exclamation-sign2"class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color:red;"></span></a></li>
                         <li class="divider"></li>
-                        <li><a th:href="@{/welcome}">注销</a></li>
+                        <li><a th:href="@{/login}">注销</a></li>
                     </ul></li>
             </ul>
         </div>
@@ -170,7 +99,7 @@
     </div>
 </div>
 
-<!-- 管理员修改的模态框 -->
+<!-- 管理员修改信息模态框 -->
 <div class="modal fade" id="adminUpdateModal" tabindex="-1"
      role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -239,7 +168,6 @@
                         </div>
                     </div>
 
-
                     <div class="form-group">
                         <label class="col-sm-2 control-label">部门</label>
                         <div class="col-sm-4">
@@ -257,7 +185,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- 消息提醒的模态框 -->
 <div class="modal fade" id="messageModal" tabindex="-1"
@@ -300,8 +227,10 @@
     </div>
 </div>
 
-
 <script type="text/javascript">
+    //保存部门Id
+    var deptId;
+    //加载页面内容
     function addContent(num) {
         //清空内容
         $("#content").empty();
@@ -333,34 +262,31 @@
             $("#content").append("<div></div>").addClass("frames").append("<iframe name='left' id='rightMain' src='/getoutstorage2' frameborder='false' scrolling='auto' style='border:none;' width='100%' height='580px' allowtransparency='true'></iframe>");
         }
     }
+
+    //跳转到后台显示区域，并加载内容
     $("#JumpToContent").click(function(){
         $("#content").empty();
         $("#content").append("<div></div>").addClass("frames").append("<iframe name='left' id='rightMain' src='/linechart1' frameborder='false' scrolling='auto' style='border:none;' width='100%' height='580px' allowtransparency='true'></iframe>");
     });
 
-
     //1、我们是按钮创建之前就绑定了click，所以绑定不上。
     //1）、可以在创建按钮的时候绑定。    2）、绑定点击.live()
     //jquery新版没有live，使用on进行替代
     $("#edit_btn").click(function() {
-        var id = 1;
-        //alert("edit");
-
-        //1、查出员工信息，显示员工信息
+        var id = 20152413;
+        //1、查出管理员信息，并显示管理员信息
         getAdmin(id);
 
-        //2、查出部门信息，并显示部门列表
-        getDepts("#adminUpdateModal select");
-
-        //3、把员工的id传递给模态框的更新按钮
+        //2、把管理员的id传递给模态框的更新按钮
         $("#admin_update_btn").attr("edit-id", id);
-        //点击弹出模态框
+
+        //3、弹出模态框
         $("#adminUpdateModal").modal({
             backdrop : "static"
         });
     });
 
-    //显示消息模态框，提醒管理员查看
+    //弹出消息模态框，提醒管理员查看
     $("#message_btn").click(function(){
         $("#messageModal").modal({
             backdrop : "static"
@@ -373,66 +299,62 @@
         $("#glyphicon-exclamation-sign2").remove();
     }
 
-
-
     //查询管理员部门信息
     function getDepts(ele) {
         //清空之前下拉列表的值
         $(ele).empty();
         $.ajax({
-            url : "${APP_PATH}/admindepts",
+            url : "/AdminDept/admindepts",
             type : "GET",
             success : function(result) {
                 //console.log(result);
-                //显示部门信息在下拉列表中
-                //$("#empAddModal select").append("")
                 /* 	dmindepts:Array(2)
                     0:{id: 1, deptId: 1, deptName: "运营部"}
                     1:{id: 2, deptId: 2, deptName: "市场部"}
                     length:2 */
+                //显示部门信息在下拉列表中
                 $.each(result.extend.admindepts, function() {
-                    var optionEle = $("<option></option>").append(
-                        this.deptName).attr("value", this.deptId);
-                    /* if(this.deptId == 1){
-                        optionEle.selected = true;
-                    } */
+                    if(deptId == this.deptId){
+                        var optionEle = $("<option></option>").append(
+                            this.deptName).attr("value", this.deptId).attr("selected",true);
+                    }else{
+                        var optionEle = $("<option></option>").append(
+                            this.deptName).attr("value", this.deptId);
+                    }
                     optionEle.appendTo(ele);
                 });
             }
         });
     }
+
     //查询管理员信息
     function getAdmin(id) {
         $.ajax({
-            url : "${APP_PATH}/admin/" + id,
+            url : "/Admin/admin/" + id,
             type : "GET",
             success : function(result) {
                 //console.log(result);
-                /* 	admin: adminDeptId: 1
-                    adminEmail: "kevin@qq.com"
-                    adminGender: "M"
-                    adminId: 20152413
-                    adminPassword: "123456"
-                    adminPhone: "18823548067"
-                    adminUsername: "张三"
-                    id: 1 */
                 var adminData = result.extend.admin;
                 $("#userid_update_input").val(adminData.adminId);
                 $("#username_update_input").val(adminData.adminUsername);
                 $("#password_update_input").val(adminData.adminPassword);
                 $("#email_update_input").val(adminData.adminEmail);
                 $("#phone_update_input").val(adminData.adminPhone);
-                $("#adminUpdateModal input[name=gender]").val(
-                    [ adminData.adminGender ]);
+                $("#adminUpdateModal input[name=gender]").val([ adminData.adminGender ]);
                 $("#adminUpdateModal select").val([ adminData.dept_id ]);
+                //保存管理员的部门Id
+                deptId = adminData.dept_id;
+                //获得管理员的部门信息
+                getDepts("#adminUpdateModal select");
             }
         });
     }
 
+    //更新管理员信息
     $("#admin_update_btn").click(function(){
         //alert("更新成功！");
         $.ajax({
-            url: "${APP_PATH}/updateadmin",
+            url: "Admin/updateadmin",
             data: $("#adminUpdateModal form").serialize(),
             type: "POST",
             success:function(result){
@@ -446,6 +368,7 @@
             }
         });
     });
+
 </script>
 
 </body>
