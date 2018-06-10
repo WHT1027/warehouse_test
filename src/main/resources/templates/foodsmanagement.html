@@ -166,7 +166,7 @@
 	</div>
 	
 	<script type="text/javascript">
-		var totalRecord, currentPage;
+		var totalRecord, currentPage,foodTypeId;
 		//1、页面加载完成以后，直接去发送ajax请求,要到分页数据
 		$(function() {
 			//去首页
@@ -179,7 +179,7 @@
 				data : "pn=" + pn,
 				type : "GET",
 				success : function(result) {
-					console.log(result);
+					//console.log(result);
 					//1、解析并显示食品数据
 					build_foods_table(result);
 					//2、解析并显示分页信息
@@ -190,6 +190,7 @@
 			});
 		}
 
+        //解析并显示食品数据
 		function build_foods_table(result) {
 			//清空table表格
 			$("#foods_table tbody").empty();
@@ -241,6 +242,7 @@
 			totalRecord = result.extend.pageInfo.total;
 			currentPage = result.extend.pageInfo.pageNum;
 		}
+
 		//解析显示分页条，点击分页要能去下一页....
 		function build_page_nav(result) {
 			//page_nav_area
@@ -304,18 +306,19 @@
 			var navEle = $("<nav></nav>").append(ul);
 			navEle.appendTo("#page_nav_area");
 		}
-		
+
+		//点击更新
 		$(document).on("click", ".edit_btn", function() {
 			//1、查出食品信息
 			getFood($(this).attr("edit-id"));
-			//alert($(this).attr("edit-id"));
-			
-			//2.查出食品类型
-			getFoodTypes("#foodUpdateModal select");
-			
+
+            //获取食品类型信息
+            //getFoodTypes("#foodUpdateModal select");
+
 			//2、把食品的id传递给模态框的更新按钮
 			$("#food_update_btn").attr("edit-id", $(this).attr("edit-id"));
-			
+
+			//3、弹出食品信息模态框
 			$("#foodUpdateModal").modal({
 				backdrop : "static"
 			});
@@ -330,11 +333,14 @@
 					//console.log(result);
 					var foodData = result.extend.food;
 					$("#foodName_update_static").text(foodData.foodName);
-					$("#foodUpdateModal select").val([ foodData.foodTypeId]); 
+					$("#foodUpdateModal select").val([foodData.foodTypeId]);
 					$("#foodNum_update_static").val(foodData.foodNums);
 					$("#foodProducer_update_input").val(foodData.foodProducer);
 					$("#foodShelvesId_update_input").val(foodData.foodShelvesId);
-					$("#foodHouseId_update_input").val(foodData.foodHouseId);				
+					$("#foodHouseId_update_input").val(foodData.foodHouseId);
+                    //保存食品类型Id
+                    foodTypeId = foodData.foodTypeId;
+                    getFoodTypes("#foodUpdateModal select");
 				}
 			});
 		}
@@ -349,28 +355,30 @@
 				success : function(result) {
 					//console.log(result);
 					//显示食品类型信息在下拉列表中
-					//$("#empAddModal select").append("")
 					$.each(result.extend.foodsType, function() {
-						var optionEle = $("<option></option>").append(
-								this.typeName).attr("value", this.typeId);
+                        var optionEle;
+						if(foodTypeId == this.typeId){
+                            optionEle = $("<option></option>").append(
+                                this.typeName).attr("value", this.typeId).attr("selected",true);
+						}else{
+                            optionEle = $("<option></option>").append(
+                                this.typeName).attr("value", this.typeId);
+						}
 						optionEle.appendTo(ele);
 					}); 
 				}
 			});
-
 		}
 
-		//点击更新，更新食品信息
+		//更新食品信息
 		$("#food_update_btn").click(function() {
-			alert($("#foodUpdateModal form").serialize());
 			//2、发送ajax请求保存更新的食品数据
 			$.ajax({
 				url : "/foods/updatefood/" + $(this).attr("edit-id"),
 				type : "PUT",
 				data : $("#foodUpdateModal form").serialize(),
 				success : function(result) {
-				    console.log(result);
-				    //alert("马上更新");
+				   //console.log(result);
 					alert(result.msg);
 					//1、关闭对话框
 					$("#foodUpdateModal").modal("hide");
