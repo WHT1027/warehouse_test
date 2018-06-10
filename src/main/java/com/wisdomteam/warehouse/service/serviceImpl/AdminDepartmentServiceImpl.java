@@ -16,7 +16,7 @@ public class AdminDepartmentServiceImpl implements AdminDepartmentService{
 
     @Override
     public List<AdminDepartment> getDepts() {
-        List<AdminDepartment> list = adminDepartmentMapper.selectByExample(null);
+        List<AdminDepartment> list = adminDepartmentMapper.selectAll();
         return list;
     }
 }
