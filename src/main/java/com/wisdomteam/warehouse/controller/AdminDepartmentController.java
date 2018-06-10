@@ -14,17 +14,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
+@RequestMapping("/AdminDept")
 public class AdminDepartmentController {
 	
 	@Autowired
 	AdminDepartmentService adminDepartmentService;
-	
-	
-/*	@RequestMapping(value="/admindepts",method= RequestMethod.GET)
+
+	/**
+	 * 查询管理员部门信息
+	 * @return
+	 */
+	@RequestMapping(value="/admindepts",method= RequestMethod.GET)
 	@ResponseBody
 	public JsonMsg getadmindepts() {
 		System.out.println("进入AdminDepartmentController读取数据！");
-		List<AdminDepartment> adminDepts = adminDepartmentService.getAllAdminDept();
+		List<AdminDepartment> adminDepts = adminDepartmentService.getDepts();
 		return JsonMsg.success().add("admindepts", adminDepts);
-	}*/
+	}
 }
