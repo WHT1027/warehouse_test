@@ -18,37 +18,35 @@ public class AdminController {
     AdminService adminService;
 
     /**
+     * 注销帐号时，移除Session保存的userId，并跳转到登录页面
+     * @return
+     */
+    @RequestMapping("/loginout")
+    public String loginout(){
+        return "redirect:/login";
+    }
+
+    /**
      * 登陆验证
      * @return
      * @throws IOException
      */
     @RequestMapping(value="/logincheck")
     @ResponseBody
-    public JsonMsg loginCheck(@RequestParam("userId")String userId, @RequestParam("userPassword")String userPassword) throws IOException {
+    public JsonMsg loginCheck(@RequestParam("userId")Integer userId, @RequestParam("userPassword")String userPassword) throws IOException {
         System.out.println("进入后台处理中");
-        System.out.println(userId);
-        System.out.println(userPassword);
 
         //1.从后台数据库查询管理员信息
-        Admin admin = getAdmin();
-	    System.out.println(admin.getAdminId().toString());
-		System.out.println(admin.getAdminPassword());
+        Admin admin = adminService.getAdminById(userId);
+        String strUserId = userId.toString();
         //2.验证登陆信息是否正确
-        if(!userId.equals(admin.getAdminId().toString())) {
+        if(!strUserId.equals(admin.getAdminId().toString())) {
             return JsonMsg.fail().add("va_msg", "账号错误！");
         }
         if(!userPassword.equals(admin.getAdminPassword())) {
             return JsonMsg.fail().add("va_msg", "密码错误！");
         }
         return  JsonMsg.success().add("va_msg", "登陆成功！");
-    }
-
-    /**
-     * 查询管理员信息
-     * @return
-     */
-    public Admin getAdmin() {
-        return adminService.getAdminById(20152413);
     }
 
     /**
@@ -63,6 +61,12 @@ public class AdminController {
         Admin admin = adminService.getAdminById(id);
         return JsonMsg.success().add("admin", admin);
     }
+
+    /**
+     * 更新管理员信息
+     * @param admin
+     * @return
+     */
     @RequestMapping(value="/updateadmin",method= RequestMethod.POST)
     @ResponseBody
     public JsonMsg updateAdmin(@Valid Admin admin) {
