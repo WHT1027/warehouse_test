@@ -5,5 +5,4 @@ import java.util.List;
 
 public interface AdminDepartmentService {
 	public List<AdminDepartment> getDepts();
-
 }
