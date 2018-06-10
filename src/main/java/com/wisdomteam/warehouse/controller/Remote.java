@@ -1,42 +1,47 @@
 package com.wisdomteam.warehouse.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class Remote {
 
-    @RequestMapping("/hello")
-    public String hello(){
-        return "hello warehouse";
-    }
-
-    @RequestMapping("/welcome")
+    //@RequestMapping("/welcome")
     /*@ResponseBody*/
-    public String welcome(){
+  /*  public String welcome(){
         return "index";
-    }
+    }*/
 
+/*
     @RequestMapping("/warehouse")
-    /*@ResponseBody*/
+    */
+/*@ResponseBody*//*
+
     public String getWarehouse(){
         return "warehouse";
     }
+*/
+/*
 
     @RequestMapping("/linechart1")
-    /*@ResponseBody*/
+    */
+    /*@ResponseBody*//*
+
     public String getLineChart1(){
         return "linechart1";
     }
 
     @RequestMapping("/warehouse_location")
-    /*@ResponseBody*/
+    */
+    /*@ResponseBody*//*
+
     public String getWarehouse_location(){
         return "warehouse_location";
     }
 
     @RequestMapping("/foodsmanagement")
-    /*@ResponseBody*/
+    */
+    /*@ResponseBody*//*
+
     public String getFoodsManagement(){
         return "foodsmanagement";
     }
@@ -70,5 +75,6 @@ public class Remote {
     public String putInStorage2(){
         return "putinstorage2";
     }
+*/
 
 }
